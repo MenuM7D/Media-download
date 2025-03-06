@@ -39,6 +39,15 @@ function updatePlatformIndicator(platform) {
         case "youtube":
             iconClass = "fab fa-youtube";
             break;
+        case "youtube_music":
+            iconClass = "fab fa-youtube";
+            break;
+        case "spotify":
+            iconClass = "fab fa-spotify";
+            break;
+        case "soundcloud":
+            iconClass = "fab fa-soundcloud";
+            break;
         default:
             iconClass = "fas fa-question-circle";
     }
@@ -77,6 +86,15 @@ async function fetchDownloadLink() {
         case "youtube":
             apiUrl = `https://api.siputzx.my.id/api/d/ytmp4?url=${videoUrl}`;
             break;
+        case "youtube_music":
+            apiUrl = `https://api.siputzx.my.id/api/d/ytmp3?url=${videoUrl}`;
+            break;
+        case "spotify":
+            apiUrl = `https://api.siputzx.my.id/api/d/spotify?url=${videoUrl}`;
+            break;
+        case "soundcloud":
+            apiUrl = `https://api.siputzx.my.id/api/d/soundcloud?url=${videoUrl}`;
+            break;
         default:
             toastr.error("المنصة غير مدعومة");
             return;
@@ -98,7 +116,7 @@ async function fetchDownloadLink() {
 
 // عرض الفيديو
 function displayVideo(data) {
-    const videoUrl = currentPlatform === "tiktok" ? data.urls[0] : data.url || data.dl;
+    const videoUrl = currentPlatform === "tiktok" ? data.urls[0] : data.url || data.dl || data.download;
     videoSource.src = videoUrl;
     videoPlayer.load();
     videoPlayer.play();
