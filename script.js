@@ -48,6 +48,9 @@ function updatePlatformIndicator(platform) {
         case "soundcloud":
             iconClass = "fab fa-soundcloud";
             break;
+        case "instagram": // إضافة إنستغرام
+            iconClass = "fab fa-instagram";
+            break;
         default:
             iconClass = "fas fa-question-circle";
     }
@@ -95,6 +98,9 @@ async function fetchDownloadLink() {
         case "soundcloud":
             apiUrl = `https://api.siputzx.my.id/api/d/soundcloud?url=${videoUrl}`;
             break;
+        case "instagram": // إضافة إنستغرام
+            apiUrl = `https://bk9.fun/download/instagram?url=${videoUrl}`;
+            break;
         default:
             toastr.error("المنصة غير مدعومة");
             return;
@@ -104,7 +110,7 @@ async function fetchDownloadLink() {
         const response = await axios.get(apiUrl);
         const data = response.data;
         if (data.status) {
-            displayVideo(data.data);
+            displayVideo(data);
         } else {
             toastr.error("فشل في جلب البيانات");
         }
@@ -116,7 +122,16 @@ async function fetchDownloadLink() {
 
 // عرض الفيديو
 function displayVideo(data) {
-    const videoUrl = currentPlatform === "tiktok" ? data.urls[0] : data.url || data.dl || data.download;
+    let videoUrl = "";
+    if (currentPlatform === "tiktok") {
+        videoUrl = data.urls[0];
+    } else if (currentPlatform === "instagram") {
+        // معالجة استجابة إنستغرام
+        videoUrl = data.BK9[0].url;
+    } else {
+        videoUrl = data.url || data.dl || data.download;
+    }
+
     videoSource.src = videoUrl;
     videoPlayer.load();
     videoPlayer.play();
