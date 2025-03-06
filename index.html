@@ -15,11 +15,11 @@
 </head>
 <body>
     <!-- شريط جانبي للمنصة الحالية -->
-    <aside id="current-platform-indicator" class="position-fixed top-50 start-0 translate-middle-y bg-primary text-white p-3 rounded-end shadow">
+    <aside id="current-platform-indicator" class="position-fixed top-50 start-0 translate-middle-y bg-dark text-white p-3 rounded-end shadow">
         <i id="platform-icon" class="fas fa-question-circle fa-2x"></i>
     </aside>
 
-    <header class="bg-primary text-white text-center py-4">
+    <header class="bg-dark text-white text-center py-4">
         <h1 class="animate__animated animate__fadeIn">موقع تنزيل المحتوى</h1>
         <div class="language-switcher mt-2">
             <button class="btn btn-outline-light btn-sm" onclick="changeLanguage('ar')">العربية</button>
@@ -65,6 +65,27 @@
                         <p class="mt-2" data-lang="en" style="display: none;">YouTube</p>
                     </div>
                 </div>
+                <div class="col-md-2 col-sm-4 mb-4" onclick="redirectToDownload('youtube_music')">
+                    <div class="platform-icon bg-white p-3 rounded shadow hvr-grow">
+                        <i class="fab fa-youtube fa-3x text-danger"></i>
+                        <p class="mt-2" data-lang="ar">يوتيوب ميوزك</p>
+                        <p class="mt-2" data-lang="en" style="display: none;">YouTube Music</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4" onclick="redirectToDownload('spotify')">
+                    <div class="platform-icon bg-white p-3 rounded shadow hvr-grow">
+                        <i class="fab fa-spotify fa-3x text-success"></i>
+                        <p class="mt-2" data-lang="ar">سبوتيفاي</p>
+                        <p class="mt-2" data-lang="en" style="display: none;">Spotify</p>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4 mb-4" onclick="redirectToDownload('soundcloud')">
+                    <div class="platform-icon bg-white p-3 rounded shadow hvr-grow">
+                        <i class="fab fa-soundcloud fa-3x text-warning"></i>
+                        <p class="mt-2" data-lang="ar">ساوند كلاود</p>
+                        <p class="mt-2" data-lang="en" style="display: none;">SoundCloud</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -74,8 +95,8 @@
             <div class="input-group mb-3 w-100 mx-auto">
                 <input type="text" id="video-url" class="form-control animate__animated animate__fadeIn" placeholder="أدخل رابط الفيديو" data-lang="ar">
                 <input type="text" id="video-url-en" class="form-control animate__animated animate__fadeIn" placeholder="Enter Video URL" data-lang="en" style="display: none;">
-                <button class="btn btn-primary hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
-                <button class="btn btn-primary hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
+                <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
+                <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
             </div>
             <div id="video-player" class="hidden my-4">
                 <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360">
@@ -99,7 +120,7 @@
         </section>
     </main>
 
-    <footer class="bg-primary text-white text-center py-3">
+    <footer class="bg-dark text-white text-center py-3">
         <p>All rights reserved to M7D © 2025</p>
     </footer>
 
