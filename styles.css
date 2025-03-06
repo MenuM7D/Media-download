@@ -1,0 +1,68 @@
+/* ملف styles.css */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #000000; /* النص باللون الأسود */
+}
+
+body.dark-mode .platform-icon {
+    background-color: #333;
+    color: #000000; /* النص باللون الأسود */
+}
+
+body.dark-mode .btn-link {
+    color: #ffffff !important;
+}
+
+body.dark-mode .form-control {
+    background-color: #333;
+    color: #ffffff;
+    border-color: #555;
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #ccc;
+}
+
+body.dark-mode .btn-success,
+body.dark-mode .btn-info,
+body.dark-mode .btn-secondary {
+    color: #ffffff;
+}
+
+.platform-icon {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.platform-icon:hover {
+    transform: scale(1.05);
+}
+
+#video-player {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn {
+    margin: 5px;
+}
+
+#current-platform-indicator {
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+#current-platform-indicator:hover {
+    transform: translateX(10px);
+}
+
+@media (max-width: 768px) {
+    .platforms .col-md-2 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
