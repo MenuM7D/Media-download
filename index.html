@@ -13,21 +13,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body>
     <!-- شريط جانبي للمنصة الحالية -->
-    <aside id="current-platform-indicator" class="position-fixed top-50 start-0 translate-middle-y bg-dark text-white p-3 rounded-end shadow">
+    <aside id="current-platform-indicator" class="position-fixed top-50 start-0 translate-middle-y bg-primary text-white p-3 rounded-end shadow">
         <i id="platform-icon" class="fas fa-question-circle fa-2x"></i>
     </aside>
 
-    <header class="bg-dark text-white text-center py-4 position-relative">
+    <header class="bg-primary text-white text-center py-4">
         <h1 class="animate__animated animate__fadeIn">موقع تنزيل المحتوى</h1>
-        <div class="position-absolute top-0 end-0 mt-3 me-3">
-            <button id="theme-toggle" class="btn btn-link text-white hvr-grow">
-                <i class="fas fa-moon fa-2x"></i>
-            </button>
-            <button id="language-toggle" class="btn btn-link text-white hvr-grow">
-                <i class="fas fa-globe fa-2x"></i>
-            </button>
+        <div class="language-switcher mt-2">
+            <button class="btn btn-outline-light btn-sm" onclick="changeLanguage('ar')">العربية</button>
+            <button class="btn btn-outline-light btn-sm" onclick="changeLanguage('en')">English</button>
         </div>
     </header>
 
@@ -75,7 +71,7 @@
         <section id="download-section" class="hidden text-center">
             <h2 id="download-title" class="mb-4 animate__animated animate__fadeIn" data-lang="ar">تنزيل المحتوى</h2>
             <h2 id="download-title-en" class="mb-4 animate__animated animate__fadeIn" data-lang="en" style="display: none;">Download Content</h2>
-            <div class="input-group mb-3 w-50 mx-auto">
+            <div class="input-group mb-3 w-100 mx-auto">
                 <input type="text" id="video-url" class="form-control animate__animated animate__fadeIn" placeholder="أدخل رابط الفيديو" data-lang="ar">
                 <input type="text" id="video-url-en" class="form-control animate__animated animate__fadeIn" placeholder="Enter Video URL" data-lang="en" style="display: none;">
                 <button class="btn btn-primary hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
@@ -103,7 +99,7 @@
         </section>
     </main>
 
-    <footer class="bg-dark text-white text-center py-3">
+    <footer class="bg-primary text-white text-center py-3">
         <p>All rights reserved to M7D © 2025</p>
     </footer>
 
@@ -115,4 +111,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="script.js"></script>
 </body>
-  </html>
+</html>
