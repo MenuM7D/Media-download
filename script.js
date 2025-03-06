@@ -20,26 +20,6 @@ function changeLanguage(lang) {
     });
 }
 
-// تبديل الوضع الداكن/النهاري
-document.getElementById("theme-toggle").addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-    const icon = document.querySelector("#theme-toggle i");
-    if (document.body.classList.contains("dark-mode")) {
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
-    } else {
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
-    }
-});
-
-// تبديل اللغة
-document.getElementById("language-toggle").addEventListener("click", () => {
-    const currentLang = document.documentElement.lang;
-    const newLang = currentLang === "ar" ? "en" : "ar";
-    changeLanguage(newLang);
-});
-
 // تحديث المؤشر عند تغيير المنصة
 function updatePlatformIndicator(platform) {
     let iconClass = "";
