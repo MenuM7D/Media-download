@@ -1,35 +1,45 @@
 /* ملف styles.css */
-body.dark-mode {
-    background-color: #1a1a1a;
-    color: #000000; /* النص باللون الأسود */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    margin: 0;
+    padding: 0;
 }
 
-body.dark-mode .platform-icon {
-    background-color: #333;
-    color: #000000; /* النص باللون الأسود */
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
 }
 
-body.dark-mode .btn-link {
-    color: #ffffff !important;
+.language-switcher {
+    margin-top: 10px;
 }
 
-body.dark-mode .form-control {
-    background-color: #333;
-    color: #ffffff;
-    border-color: #555;
+.language-switcher button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
-body.dark-mode .form-control::placeholder {
-    color: #ccc;
+main {
+    padding: 20px;
 }
 
-body.dark-mode .btn-success,
-body.dark-mode .btn-info,
-body.dark-mode .btn-secondary {
-    color: #ffffff;
+.platforms {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .platform-icon {
+    text-align: center;
+    margin: 10px;
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -38,17 +48,34 @@ body.dark-mode .btn-secondary {
     transform: scale(1.05);
 }
 
-#video-player {
-    max-width: 100%;
-    margin: 0 auto;
+.platform-icon img {
+    width: 100px;
+    height: 100px;
 }
 
-.hidden {
+#download-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#download-section.hidden {
     display: none;
 }
 
-.btn {
-    margin: 5px;
+#video-url {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 #current-platform-indicator {
@@ -64,5 +91,10 @@ body.dark-mode .btn-secondary {
     .platforms .col-md-2 {
         flex: 0 0 50%;
         max-width: 50%;
+    }
+
+    #video-player {
+        width: 100%;
+        height: auto;
     }
 }
