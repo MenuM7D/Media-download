@@ -1,4 +1,3 @@
-// ملف script.js
 let currentPlatform = "";
 const downloadBtn = document.getElementById("download-btn");
 const copyLinkBtn = document.getElementById("copy-link-btn");
@@ -83,6 +82,23 @@ function clearFileInfo() {
     document.getElementById("file-duration").textContent = "";
     document.getElementById("file-size").textContent = "";
     document.getElementById("file-status").textContent = "";
+    hideElements(); // إخفاء الأزرار عند مسح الرابط
+}
+
+// إخفاء العناصر
+function hideElements() {
+    downloadBtn.classList.remove("show-elements");
+    copyLinkBtn.classList.remove("show-elements");
+    shareBtn.classList.remove("show-elements");
+    fileInfo.classList.remove("show-elements");
+}
+
+// إظهار العناصر
+function showElements() {
+    downloadBtn.classList.add("show-elements");
+    copyLinkBtn.classList.add("show-elements");
+    shareBtn.classList.add("show-elements");
+    fileInfo.classList.add("show-elements");
 }
 
 // جلب رابط الفيديو من API
@@ -141,6 +157,7 @@ async function fetchDownloadLink() {
             }, 500);
             setupDownloadButtons(data);
             await displayFileInfo(data); // عرض المعلومات الفعلية
+            showElements(); // إظهار الأزرار عند نجاح جلب البيانات
         } else {
             toastr.error("فشل في جلب البيانات");
         }
