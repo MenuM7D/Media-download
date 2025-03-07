@@ -132,7 +132,6 @@ async function fetchDownloadLink() {
 // عرض معلومات الملف
 async function displayFileInfo(data) {
     const fileDuration = document.getElementById("file-duration");
-    const fileType = document.getElementById("file-type");
     const fileSize = document.getElementById("file-size");
     const fileStatus = document.getElementById("file-status");
 
@@ -156,22 +155,6 @@ async function displayFileInfo(data) {
         const seconds = Math.floor(duration % 60);
         fileDuration.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     });
-
-    // اكتشاف النوع باستخدام Content-Type
-    try {
-        const response = await fetch(videoUrl, { method: "HEAD" });
-        const contentType = response.headers.get("content-type");
-        if (contentType.includes("audio/")) {
-            fileType.textContent = "صوت";
-        } else if (contentType.includes("video/")) {
-            fileType.textContent = "فيديو";
-        } else {
-            fileType.textContent = "غير معروف"; // إذا كان النوع غير معروف
-        }
-    } catch (error) {
-        console.error("حدث خطأ أثناء جلب نوع الملف:", error);
-        fileType.textContent = "غير معروف";
-    }
 
     // اكتشاف الحجم
     try {
