@@ -157,9 +157,15 @@ async function displayFileInfo(data) {
         fileDuration.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     });
 
-    // اكتشاف النوع
+    // اكتشاف النوع بناءً على امتداد الرابط
     const fileExtension = videoUrl.split(".").pop().toLowerCase();
-    fileType.textContent = fileExtension === "mp3" ? "صوت" : "فيديو";
+    if (fileExtension === "mp3") {
+        fileType.textContent = "صوت";
+    } else if (fileExtension === "mp4") {
+        fileType.textContent = "فيديو";
+    } else {
+        fileType.textContent = "غير معروف"; // إذا كان الامتداد غير معروف
+    }
 
     // اكتشاف الحجم
     try {
@@ -199,7 +205,7 @@ function setupDownloadButtons(data) {
     downloadBtn.onclick = () => {
         const link = document.createElement("a");
         link.href = videoUrl;
-        link.download = `video_${Date.now()}.mp4`;
+        link.download = `video_${Date.now()}.${videoUrl.split(".").pop()}`; // حفظ الملف بامتداده الصحيح
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
