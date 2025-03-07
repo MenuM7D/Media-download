@@ -1,6 +1,6 @@
 // ملف script.js
 let currentPlatform = "";
-const videoPlayer = document.getElementById("my-video");
+const videoPlayer = videojs("my-video"); // استخدام video.js لتشغيل الفيديو
 const videoSource = document.getElementById("video-source");
 const downloadBtn = document.getElementById("download-btn");
 const copyLinkBtn = document.getElementById("copy-link-btn");
@@ -131,9 +131,13 @@ function displayVideo(data) {
         videoUrl = data.data.url || data.data.dl || data.data.download;
     }
 
+    // تحديث مصدر الفيديو
     videoSource.src = videoUrl;
+    videoPlayer.src({ type: "video/mp4", src: videoUrl });
     videoPlayer.load();
     videoPlayer.play();
+
+    // إظهار مشغل الفيديو
     document.getElementById("video-player").classList.remove("hidden");
 
     // إعداد زر التنزيل
