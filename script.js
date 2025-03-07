@@ -214,10 +214,20 @@ async function fetchDownloadLink() {
         const response = await axios.get(apiUrl);
         const data = response.data;
         if (data.status) {
-            progress.style.width = "100%";
-            setTimeout(() => {
-                progressBar.classList.add("hidden");
-            }, 500);
+            // بدء شريط التقدم بشكل تدريجي
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        progressBar.classList.add("hidden");
+                    }, 500);
+                } else {
+                    width++;
+                    progress.style.width = `${width}%`;
+                }
+            }, 20); // زيادة العرض كل 20 مللي ثانية
+
             setupDownloadButtons(data);
             await displayFileInfo(data); // عرض المعلومات الفعلية
             showElements(); // إظهار الأزرار عند نجاح جلب البيانات
