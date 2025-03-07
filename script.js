@@ -1,3 +1,25 @@
+// كائن يحتوي على النصوص باللغتين
+const translations = {
+    ar: {
+        errorEmptyUrl: "يرجى إدخال رابط الفيديو",
+        errorFetchData: "فشل في جلب البيانات",
+        errorGeneral: "حدث خطأ أثناء جلب البيانات",
+        successCopyLink: "تم نسخ الرابط بنجاح",
+        infoShareUnsupported: "المشاركة غير مدعومة في هذا المتصفح",
+        fileStatusSuccess: "ناجحة",
+        fileSizeUnknown: "غير معروف",
+    },
+    en: {
+        errorEmptyUrl: "Please enter the video URL",
+        errorFetchData: "Failed to fetch data",
+        errorGeneral: "An error occurred while fetching data",
+        successCopyLink: "Link copied successfully",
+        infoShareUnsupported: "Sharing is not supported in this browser",
+        fileStatusSuccess: "Successful",
+        fileSizeUnknown: "Unknown",
+    }
+};
+
 let currentPlatform = "";
 const downloadBtn = document.getElementById("download-btn");
 const copyLinkBtn = document.getElementById("copy-link-btn");
@@ -104,8 +126,10 @@ function showElements() {
 // جلب رابط الفيديو من API
 async function fetchDownloadLink() {
     const videoUrl = videoUrlInput.value || videoUrlInputEn.value;
+    const lang = document.documentElement.lang || "ar"; // الحصول على اللغة الحالية
+
     if (!videoUrl) {
-        toastr.error("يرجى إدخال رابط الفيديو");
+        toastr.error(translations[lang].errorEmptyUrl);
         clearFileInfo(); // مسح المعلومات إذا كان الحقل فارغًا
         return;
     }
@@ -143,7 +167,7 @@ async function fetchDownloadLink() {
             apiUrl = `https://bk9.fun/download/instagram?url=${videoUrl}`;
             break;
         default:
-            toastr.error("المنصة غير مدعومة");
+            toastr.error(translations[lang].errorFetchData);
             return;
     }
 
@@ -159,16 +183,17 @@ async function fetchDownloadLink() {
             await displayFileInfo(data); // عرض المعلومات الفعلية
             showElements(); // إظهار الأزرار عند نجاح جلب البيانات
         } else {
-            toastr.error("فشل في جلب البيانات");
+            toastr.error(translations[lang].errorFetchData);
         }
     } catch (error) {
         console.error("حدث خطأ:", error);
-        toastr.error("حدث خطأ أثناء جلب البيانات");
+        toastr.error(translations[lang].errorGeneral);
     }
 }
 
 // عرض معلومات الملف
 async function displayFileInfo(data) {
+    const lang = document.documentElement.lang || "ar"; // الحصول على اللغة الحالية
     const fileDuration = document.getElementById("file-duration");
     const fileSize = document.getElementById("file-size");
     const fileStatus = document.getElementById("file-status");
@@ -220,17 +245,19 @@ async function displayFileInfo(data) {
         }
     } catch (error) {
         console.error("حدث خطأ أثناء جلب الحجم:", error);
-        fileSize.textContent = "غير معروف";
+        fileSize.textContent = translations[lang].fileSizeUnknown;
     }
 
     // الحالة
-    fileStatus.textContent = "ناجحة";
+    fileStatus.textContent = translations[lang].fileStatusSuccess;
 
     fileInfo.classList.remove("hidden");
 }
 
 // إعداد أزرار التنزيل والنسخ والمشاركة
 function setupDownloadButtons(data) {
+    const lang = document.documentElement.lang || "ar"; // الحصول على اللغة الحالية
+
     let videoUrl = "";
     if (currentPlatform === "tiktok") {
         videoUrl = data.urls[0];
@@ -255,7 +282,7 @@ function setupDownloadButtons(data) {
     // إعداد زر نسخ الرابط
     copyLinkBtn.onclick = () => {
         navigator.clipboard.writeText(videoUrl).then(() => {
-            toastr.success("تم نسخ الرابط بنجاح");
+            toastr.success(translations[lang].successCopyLink);
         });
     };
 
@@ -267,7 +294,7 @@ function setupDownloadButtons(data) {
                 url: videoUrl,
             });
         } else {
-            toastr.info("المشاركة غير مدعومة في هذا المتصفح");
+            toastr.info(translations[lang].infoShareUnsupported);
         }
     };
 }
