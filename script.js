@@ -1,12 +1,13 @@
 // ملف script.js
 let currentPlatform = "";
-const videoPlayer = document.getElementById("my-video");
-const videoSource = document.getElementById("video-source");
 const downloadBtn = document.getElementById("download-btn");
 const copyLinkBtn = document.getElementById("copy-link-btn");
 const shareBtn = document.getElementById("share-btn");
 const platformIndicator = document.getElementById("current-platform-indicator");
 const platformIcon = document.getElementById("platform-icon");
+const progressBar = document.getElementById("progress-bar");
+const progress = document.getElementById("progress");
+const fileInfo = document.getElementById("file-info");
 
 // الترجمة
 function changeLanguage(lang) {
@@ -72,6 +73,9 @@ async function fetchDownloadLink() {
         return;
     }
 
+    progressBar.classList.remove("hidden");
+    progress.style.width = "0%";
+
     let apiUrl = "";
     switch (currentPlatform) {
         case "tiktok":
@@ -110,7 +114,12 @@ async function fetchDownloadLink() {
         const response = await axios.get(apiUrl);
         const data = response.data;
         if (data.status) {
-            displayVideo(data);
+            progress.style.width = "100%";
+            setTimeout(() => {
+                progressBar.classList.add("hidden");
+            }, 500);
+            setupDownloadButtons(data);
+            await displayFileInfo(data); // عرض المعلومات الفعلية
         } else {
             toastr.error("فشل في جلب البيانات");
         }
@@ -120,8 +129,13 @@ async function fetchDownloadLink() {
     }
 }
 
-// عرض الفيديو
-function displayVideo(data) {
+// عرض معلومات الملف
+async function displayFileInfo(data) {
+    const fileDuration = document.getElementById("file-duration");
+    const fileType = document.getElementById("file-type");
+    const fileSize = document.getElementById("file-size");
+    const fileStatus = document.getElementById("file-status");
+
     let videoUrl = "";
     if (currentPlatform === "tiktok") {
         videoUrl = data.urls[0];
@@ -131,10 +145,51 @@ function displayVideo(data) {
         videoUrl = data.data.url || data.data.dl || data.data.download;
     }
 
-    videoSource.src = videoUrl;
-    videoPlayer.load();
-    videoPlayer.play();
-    document.getElementById("video-player").classList.remove("hidden");
+    // اكتشاف الوقت
+    const video = document.createElement("video");
+    video.src = videoUrl;
+    video.addEventListener("loadedmetadata", () => {
+        const duration = video.duration;
+        const minutes = Math.floor(duration / 60);
+        const seconds = Math.floor(duration % 60);
+        fileDuration.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    });
+
+    // اكتشاف النوع
+    const fileExtension = videoUrl.split(".").pop().toLowerCase();
+    fileType.textContent = fileExtension === "mp3" ? "صوت" : "فيديو";
+
+    // اكتشاف الحجم
+    try {
+        const response = await fetch(videoUrl, { method: "HEAD" });
+        const size = response.headers.get("content-length");
+        if (size) {
+            const sizeInMB = (size / (1024 * 1024)).toFixed(2);
+            fileSize.textContent = `${sizeInMB} MB`;
+        } else {
+            fileSize.textContent = "غير معروف";
+        }
+    } catch (error) {
+        console.error("حدث خطأ أثناء جلب الحجم:", error);
+        fileSize.textContent = "غير معروف";
+    }
+
+    // الحالة
+    fileStatus.textContent = "ناجحة";
+
+    fileInfo.classList.remove("hidden");
+}
+
+// إعداد أزرار التنزيل والنسخ والمشاركة
+function setupDownloadButtons(data) {
+    let videoUrl = "";
+    if (currentPlatform === "tiktok") {
+        videoUrl = data.urls[0];
+    } else if (currentPlatform === "instagram") {
+        videoUrl = data.BK9[0].url;
+    } else {
+        videoUrl = data.data.url || data.data.dl || data.data.download;
+    }
 
     // إعداد زر التنزيل
     downloadBtn.onclick = () => {
