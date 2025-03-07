@@ -65,6 +65,8 @@ function changeLanguage(lang) {
         }
     });
     updatePlaceholder(currentPlatform); // تحديث placeholder عند تغيير اللغة
+    clearVideoUrlInput(); // مسح حقل إدخال الرابط عند تغيير اللغة
+    clearFileInfo(); // مسح معلومات الملف وإخفاء الأزرار
 }
 
 // تحديث المؤشر عند تغيير المنصة
