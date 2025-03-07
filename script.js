@@ -8,6 +8,8 @@ const platformIcon = document.getElementById("platform-icon");
 const progressBar = document.getElementById("progress-bar");
 const progress = document.getElementById("progress");
 const fileInfo = document.getElementById("file-info");
+const videoUrlInput = document.getElementById("video-url");
+const videoUrlInputEn = document.getElementById("video-url-en");
 
 // الترجمة
 function changeLanguage(lang) {
@@ -63,11 +65,18 @@ function redirectToDownload(platform) {
     currentPlatform = platform;
     document.getElementById("download-section").classList.remove("hidden");
     updatePlatformIndicator(platform);
+    clearVideoUrlInput(); // مسح حقل إدخال الرابط عند التبديل بين المنصات
+}
+
+// مسح حقل إدخال الرابط
+function clearVideoUrlInput() {
+    videoUrlInput.value = "";
+    videoUrlInputEn.value = "";
 }
 
 // جلب رابط الفيديو من API
 async function fetchDownloadLink() {
-    const videoUrl = document.getElementById("video-url").value || document.getElementById("video-url-en").value;
+    const videoUrl = videoUrlInput.value || videoUrlInputEn.value;
     if (!videoUrl) {
         toastr.error("يرجى إدخال رابط الفيديو");
         return;
@@ -156,20 +165,30 @@ async function displayFileInfo(data) {
         fileDuration.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     });
 
-    // اكتشاف الحجم باستخدام طلب GET
+    // اكتشاف الحجم باستخدام HEAD أولاً، ثم GET كحل احتياطي
     try {
-        const response = await fetch(videoUrl);
-        const reader = response.body.getReader();
-        let totalSize = 0;
+        // المحاولة الأولى: استخدام HEAD
+        const headResponse = await fetch(videoUrl, { method: "HEAD" });
+        const contentLength = headResponse.headers.get("content-length");
 
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            totalSize += value.length;
+        if (contentLength) {
+            const sizeInMB = (contentLength / (1024 * 1024)).toFixed(2);
+            fileSize.textContent = `${sizeInMB} MB`;
+        } else {
+            // المحاولة الثانية: استخدام GET
+            const getResponse = await fetch(videoUrl);
+            const reader = getResponse.body.getReader();
+            let totalSize = 0;
+
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                totalSize += value.length;
+            }
+
+            const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+            fileSize.textContent = `${sizeInMB} MB`;
         }
-
-        const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
-        fileSize.textContent = `${sizeInMB} MB`;
     } catch (error) {
         console.error("حدث خطأ أثناء جلب الحجم:", error);
         fileSize.textContent = "غير معروف";
@@ -225,5 +244,5 @@ function setupDownloadButtons(data) {
 }
 
 // جلب الفيديو تلقائيًا عند إدخال الرابط
-document.getElementById("video-url").addEventListener("input", fetchDownloadLink);
-document.getElementById("video-url-en").addEventListener("input", fetchDownloadLink);
+videoUrlInput.addEventListener("input", fetchDownloadLink);
+videoUrlInputEn.addEventListener("input", fetchDownloadLink);
