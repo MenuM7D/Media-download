@@ -114,8 +114,11 @@
                 <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
             </div>
             <div id="video-player" class="hidden my-4">
-                <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360">
+                <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360" data-setup="{}">
                     <source id="video-source" type="video/mp4">
+                    <p class="vjs-no-js">
+                        لتشغيل الفيديو، يرجى تمكين JavaScript أو استخدام متصفح يدعم HTML5 video.
+                    </p>
                 </video>
                 <div class="mt-3">
                     <button id="download-btn" class="btn btn-success hvr-grow">
