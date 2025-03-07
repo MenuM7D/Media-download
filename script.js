@@ -84,6 +84,7 @@ function resetUI() {
     progressBar.classList.add("hidden");
     fileDuration.textContent = "";
     fileSize.textContent = "";
+    fileSize.style.display = "none"; // إخفاء الحجم بشكل افتراضي
     fileStatus.textContent = "";
 }
 
