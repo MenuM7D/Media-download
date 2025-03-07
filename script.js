@@ -131,12 +131,9 @@ function displayVideo(data) {
         videoUrl = data.data.url || data.data.dl || data.data.download;
     }
 
-    // تحديث مصدر الفيديو
     videoSource.src = videoUrl;
-    videoPlayer.load(); // إعادة تحميل الفيديو
-    videoPlayer.play(); // تشغيل الفيديو تلقائيًا
-
-    // إظهار مشغل الفيديو
+    videoPlayer.load();
+    videoPlayer.play();
     document.getElementById("video-player").classList.remove("hidden");
 
     // إعداد زر التنزيل
