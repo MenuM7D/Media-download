@@ -53,7 +53,6 @@ const progress = document.getElementById("progress");
 const fileInfo = document.getElementById("file-info");
 const videoUrlInput = document.getElementById("video-url");
 const videoUrlInputEn = document.getElementById("video-url-en");
-const platformMessage = document.getElementById("platform-message"); // عنصر جديد لعرض الرسالة المخصصة
 
 // الترجمة
 function changeLanguage(lang) {
@@ -65,7 +64,7 @@ function changeLanguage(lang) {
             element.style.display = "none";
         }
     });
-    updatePlatformMessage(); // تحديث الرسالة عند تغيير اللغة
+    updatePlaceholder(currentPlatform); // تحديث placeholder عند تغيير اللغة
 }
 
 // تحديث المؤشر عند تغيير المنصة
@@ -103,14 +102,22 @@ function updatePlatformIndicator(platform) {
             iconClass = "fas fa-question-circle";
     }
     platformIcon.className = `${iconClass} fa-2x`;
-    updatePlatformMessage(); // تحديث الرسالة عند تغيير المنصة
+    updatePlaceholder(platform); // تحديث placeholder عند تغيير المنصة
 }
 
-// تحديث الرسالة المخصصة بناءً على المنصة واللغة
-function updatePlatformMessage() {
+// تحديث placeholder بناءً على المنصة واللغة
+function updatePlaceholder(platform) {
     const lang = document.documentElement.lang || "ar";
-    const message = translations[lang].platformMessages[currentPlatform] || translations[lang].errorEmptyUrl;
-    platformMessage.textContent = message;
+    const placeholderText = translations[lang].platformMessages[platform] || translations[lang].errorEmptyUrl;
+
+    const videoUrlInput = document.getElementById("video-url");
+    const videoUrlInputEn = document.getElementById("video-url-en");
+
+    if (lang === "ar") {
+        videoUrlInput.placeholder = placeholderText;
+    } else {
+        videoUrlInputEn.placeholder = placeholderText;
+    }
 }
 
 // الانتقال إلى صفحة التنزيل
