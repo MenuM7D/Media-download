@@ -87,14 +87,28 @@ footer {
     transform: translateX(10px);
 }
 
+#progress-bar {
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#progress {
+    transition: width 0.3s ease;
+}
+
+#file-info {
+    margin-top: 20px;
+}
+
+#file-info .card {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 @media (max-width: 768px) {
     .platforms .col-md-2 {
         flex: 0 0 50%;
         max-width: 50%;
-    }
-
-    #video-player {
-        width: 100%;
-        height: auto;
     }
 }
