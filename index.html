@@ -104,7 +104,7 @@
             </div>
         </section>
 
-        <section id="download-section" class="hidden text-center">
+        <section id="download-section" class="text-center">
             <h2 id="download-title" class="mb-4 animate__animated animate__fadeIn" data-lang="ar">تنزيل المحتوى</h2>
             <h2 id="download-title-en" class="mb-4 animate__animated animate__fadeIn" data-lang="en" style="display: none;">Download Content</h2>
             <div class="input-group mb-3 w-100 mx-auto">
@@ -113,7 +113,7 @@
                 <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
                 <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
             </div>
-            <div id="video-player" class="hidden my-4">
+            <div id="video-player" class="my-4" style="display: none;">
                 <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="360">
                     <source id="video-source" type="video/mp4">
                 </video>
@@ -210,6 +210,30 @@
 
             // مسح حقل الإدخال
             inputField.value = "";
+        }
+
+        // وظيفة جلب رابط التنزيل
+        function fetchDownloadLink() {
+            const videoUrl = document.getElementById('video-url').value.trim();
+            if (videoUrl === "") {
+                toastr.warning("الرجاء إدخال رابط الفيديو.");
+                return;
+            }
+
+            // هنا يمكنك إضافة الكود لجلب رابط التنزيل من الخادم
+            // بعد الحصول على الرابط، قم بإظهار العناصر المخفية
+            document.getElementById('video-player').style.display = 'block';
+            document.getElementById('download-btn').style.display = 'inline-block';
+            document.getElementById('copy-link-btn').style.display = 'inline-block';
+            document.getElementById('share-btn').style.display = 'inline-block';
+
+            // قم بتحديث مصدر الفيديو
+            const videoSource = document.getElementById('video-source');
+            videoSource.src = videoUrl;
+            const videoPlayer = videojs('my-video');
+            videoPlayer.src({ type: 'video/mp4', src: videoUrl });
+            videoPlayer.load();
+            videoPlayer.play();
         }
     </script>
 </body>
