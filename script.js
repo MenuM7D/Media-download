@@ -156,16 +156,20 @@ async function displayFileInfo(data) {
         fileDuration.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     });
 
-    // اكتشاف الحجم
+    // اكتشاف الحجم باستخدام طلب GET
     try {
-        const response = await fetch(videoUrl, { method: "HEAD" });
-        const size = response.headers.get("content-length");
-        if (size) {
-            const sizeInMB = (size / (1024 * 1024)).toFixed(2);
-            fileSize.textContent = `${sizeInMB} MB`;
-        } else {
-            fileSize.textContent = "غير معروف";
+        const response = await fetch(videoUrl);
+        const reader = response.body.getReader();
+        let totalSize = 0;
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            totalSize += value.length;
         }
+
+        const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
+        fileSize.textContent = `${sizeInMB} MB`;
     } catch (error) {
         console.error("حدث خطأ أثناء جلب الحجم:", error);
         fileSize.textContent = "غير معروف";
