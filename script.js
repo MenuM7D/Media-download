@@ -157,14 +157,20 @@ async function displayFileInfo(data) {
         fileDuration.textContent = `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     });
 
-    // اكتشاف النوع بناءً على امتداد الرابط
-    const fileExtension = videoUrl.split(".").pop().toLowerCase();
-    if (fileExtension === "mp3") {
-        fileType.textContent = "صوت";
-    } else if (fileExtension === "mp4") {
-        fileType.textContent = "فيديو";
-    } else {
-        fileType.textContent = "غير معروف"; // إذا كان الامتداد غير معروف
+    // اكتشاف النوع باستخدام Content-Type
+    try {
+        const response = await fetch(videoUrl, { method: "HEAD" });
+        const contentType = response.headers.get("content-type");
+        if (contentType.includes("audio/")) {
+            fileType.textContent = "صوت";
+        } else if (contentType.includes("video/")) {
+            fileType.textContent = "فيديو";
+        } else {
+            fileType.textContent = "غير معروف"; // إذا كان النوع غير معروف
+        }
+    } catch (error) {
+        console.error("حدث خطأ أثناء جلب نوع الملف:", error);
+        fileType.textContent = "غير معروف";
     }
 
     // اكتشاف الحجم
@@ -205,7 +211,7 @@ function setupDownloadButtons(data) {
     downloadBtn.onclick = () => {
         const link = document.createElement("a");
         link.href = videoUrl;
-        link.download = `video_${Date.now()}.${videoUrl.split(".").pop()}`; // حفظ الملف بامتداده الصحيح
+        link.download = `file_${Date.now()}`; // حفظ الملف بدون امتداد (سيتم تحديده تلقائيًا)
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
