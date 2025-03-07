@@ -13,7 +13,6 @@
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-    <div id="platform-message" class="platform-message"></div>
     <!-- شريط جانبي للمنصة الحالية -->
     <aside id="current-platform-indicator" class="position-fixed top-50 start-0 translate-middle-y bg-dark text-white p-3 rounded-end shadow">
         <i id="platform-icon" class="fas fa-question-circle fa-2x"></i>
@@ -106,10 +105,10 @@
             <h2 id="download-title" class="mb-4 animate__animated animate__fadeIn" data-lang="ar">تنزيل المحتوى</h2>
             <h2 id="download-title-en" class="mb-4 animate__animated animate__fadeIn" data-lang="en" style="display: none;">Download Content</h2>
             <div class="input-group mb-3 w-100 mx-auto">
-                <input type="text" id="video-url" class="form-control animate__animated animate__fadeIn" placeholder="أدخل رابط الفيديو" data-lang="ar">
-                <input type="text" id="video-url-en" class="form-control animate__animated animate__fadeIn" placeholder="Enter Video URL" data-lang="en" style="display: none;">
-                <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
-                <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
+    <input type="text" id="video-url" class="form-control animate__animated animate__fadeIn" placeholder="أدخل رابط الفيديو" data-lang="ar">
+    <input type="text" id="video-url-en" class="form-control animate__animated animate__fadeIn" placeholder="Enter Video URL" data-lang="en" style="display: none;">
+    <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
+    <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
             </div>
             <div id="progress-bar" class="progress my-4 hidden">
                 <div id="progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
