@@ -8,6 +8,17 @@ const translations = {
         infoShareUnsupported: "المشاركة غير مدعومة في هذا المتصفح",
         fileStatusSuccess: "ناجحة",
         fileSizeUnknown: "غير معروف",
+        platformMessages: {
+            tiktok: "يرجي ادخال رابط فيديو تيك توك",
+            pinterest: "يرجي ادخال رابط فيديو بنترست",
+            facebook: "يرجي ادخال رابط فيديو فيسبوك",
+            twitter: "يرجي ادخال رابط فيديو تويتر",
+            youtube: "يرجي ادخال رابط فيديو يوتيوب",
+            youtube_music: "يرجي ادخال رابط اغنيه من يوتيوب ميوزك او يوتيوب العادي",
+            spotify: "يرجي ادخال رابط اغنيه من سبوتيفاي",
+            soundcloud: "يرجي ادخال رابط اغنيه من ساوند كلاود",
+            instagram: "يرجي ادخال رابط فيديو انستغرام"
+        }
     },
     en: {
         errorEmptyUrl: "Please enter the video URL",
@@ -17,6 +28,17 @@ const translations = {
         infoShareUnsupported: "Sharing is not supported in this browser",
         fileStatusSuccess: "Successful",
         fileSizeUnknown: "Unknown",
+        platformMessages: {
+            tiktok: "Please enter a TikTok video link",
+            pinterest: "Please enter a Pinterest video link",
+            facebook: "Please enter a Facebook video link",
+            twitter: "Please enter a Twitter video link",
+            youtube: "Please enter a YouTube video link",
+            youtube_music: "Please enter a YouTube Music or regular YouTube song link",
+            spotify: "Please enter a Spotify song link",
+            soundcloud: "Please enter a SoundCloud song link",
+            instagram: "Please enter an Instagram video link"
+        }
     }
 };
 
@@ -31,6 +53,7 @@ const progress = document.getElementById("progress");
 const fileInfo = document.getElementById("file-info");
 const videoUrlInput = document.getElementById("video-url");
 const videoUrlInputEn = document.getElementById("video-url-en");
+const platformMessage = document.getElementById("platform-message"); // عنصر جديد لعرض الرسالة المخصصة
 
 // الترجمة
 function changeLanguage(lang) {
@@ -42,6 +65,7 @@ function changeLanguage(lang) {
             element.style.display = "none";
         }
     });
+    updatePlatformMessage(); // تحديث الرسالة عند تغيير اللغة
 }
 
 // تحديث المؤشر عند تغيير المنصة
@@ -79,6 +103,14 @@ function updatePlatformIndicator(platform) {
             iconClass = "fas fa-question-circle";
     }
     platformIcon.className = `${iconClass} fa-2x`;
+    updatePlatformMessage(); // تحديث الرسالة عند تغيير المنصة
+}
+
+// تحديث الرسالة المخصصة بناءً على المنصة واللغة
+function updatePlatformMessage() {
+    const lang = document.documentElement.lang || "ar";
+    const message = translations[lang].platformMessages[currentPlatform] || translations[lang].errorEmptyUrl;
+    platformMessage.textContent = message;
 }
 
 // الانتقال إلى صفحة التنزيل
