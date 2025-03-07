@@ -141,6 +141,8 @@ async function displayFileInfo(data) {
         videoUrl = data.urls[0];
     } else if (currentPlatform === "instagram") {
         videoUrl = data.BK9[0].url;
+    } else if (currentPlatform === "twitter") {
+        videoUrl = data.data.downloadLink; // تعديل هنا لاستخراج رابط التنزيل من تويتر
     } else {
         videoUrl = data.data.url || data.data.dl || data.data.download;
     }
@@ -187,6 +189,8 @@ function setupDownloadButtons(data) {
         videoUrl = data.urls[0];
     } else if (currentPlatform === "instagram") {
         videoUrl = data.BK9[0].url;
+    } else if (currentPlatform === "twitter") {
+        videoUrl = data.data.downloadLink; // تعديل هنا لاستخراج رابط التنزيل من تويتر
     } else {
         videoUrl = data.data.url || data.data.dl || data.data.download;
     }
