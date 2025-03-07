@@ -110,7 +110,7 @@ async function fetchDownloadLink() {
         const response = await axios.get(apiUrl);
         const data = response.data;
         if (data.status) {
-            await displayVideo(data);
+            displayVideo(data);
         } else {
             toastr.error("فشل في جلب البيانات");
         }
@@ -121,7 +121,7 @@ async function fetchDownloadLink() {
 }
 
 // عرض الفيديو
-async function displayVideo(data) {
+function displayVideo(data) {
     let videoUrl = "";
     if (currentPlatform === "tiktok") {
         videoUrl = data.urls[0];
@@ -131,12 +131,7 @@ async function displayVideo(data) {
         videoUrl = data.data.url || data.data.dl || data.data.download;
     }
 
-    // تنزيل الفيديو كـ Blob
-    const response = await fetch(videoUrl);
-    const blob = await response.blob();
-    const blobUrl = URL.createObjectURL(blob);
-
-    videoSource.src = blobUrl;
+    videoSource.src = videoUrl;
     videoPlayer.load();
     videoPlayer.play();
     document.getElementById("video-player").classList.remove("hidden");
@@ -144,7 +139,7 @@ async function displayVideo(data) {
     // إعداد زر التنزيل
     downloadBtn.onclick = () => {
         const link = document.createElement("a");
-        link.href = blobUrl;
+        link.href = videoUrl;
         link.download = `video_${Date.now()}.mp4`;
         document.body.appendChild(link);
         link.click();
