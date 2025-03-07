@@ -48,7 +48,7 @@ function updatePlatformIndicator(platform) {
         case "soundcloud":
             iconClass = "fab fa-soundcloud";
             break;
-        case "instagram": // إضافة إنستغرام
+        case "instagram":
             iconClass = "fab fa-instagram";
             break;
         default:
@@ -98,7 +98,7 @@ async function fetchDownloadLink() {
         case "soundcloud":
             apiUrl = `https://api.siputzx.my.id/api/d/soundcloud?url=${videoUrl}`;
             break;
-        case "instagram": // إضافة إنستغرام
+        case "instagram":
             apiUrl = `https://bk9.fun/download/instagram?url=${videoUrl}`;
             break;
         default:
@@ -126,10 +126,9 @@ function displayVideo(data) {
     if (currentPlatform === "tiktok") {
         videoUrl = data.urls[0];
     } else if (currentPlatform === "instagram") {
-        // معالجة استجابة إنستغرام
         videoUrl = data.BK9[0].url;
     } else {
-        videoUrl = data.url || data.dl || data.download;
+        videoUrl = data.data.url || data.data.dl || data.data.download;
     }
 
     videoSource.src = videoUrl;
