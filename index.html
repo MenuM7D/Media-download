@@ -192,44 +192,59 @@
 
     <!-- إضافة وظائف الذكاء الاصطناعي -->
     <script>
-        // فتح واجهة المحادثة
-        function openAIChat() {
-            const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
-            aiChatModal.show();
+    // كائن يحتوي على النصوص باللغتين
+    const translations = {
+        ar: {
+            warningEmptyMessage: "الرجاء إدخال رسالة.",
+            errorAIChat: "حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.",
+            errorServer: "حدث خطأ في الاتصال بالخادم.",
+        },
+        en: {
+            warningEmptyMessage: "Please enter a message.",
+            errorAIChat: "An error occurred while communicating with the AI.",
+            errorServer: "An error occurred while connecting to the server.",
+        }
+    };
+
+    // فتح واجهة المحادثة
+    function openAIChat() {
+        const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
+        aiChatModal.show();
+    }
+
+    // إرسال رسالة إلى الذكاء الاصطناعي
+    function sendMessage() {
+        const lang = document.documentElement.lang || "ar"; // الحصول على اللغة الحالية
+        const inputField = lang === "ar" 
+            ? document.getElementById('chat-input') 
+            : document.getElementById('chat-input-en');
+        const message = inputField.value.trim();
+
+        if (message === "") {
+            toastr.warning(translations[lang].warningEmptyMessage);
+            return;
         }
 
-        // إرسال رسالة إلى الذكاء الاصطناعي
-        function sendMessage() {
-            const inputField = document.querySelector('[data-lang="ar"]').style.display !== 'none' 
-                ? document.getElementById('chat-input') 
-                : document.getElementById('chat-input-en');
-            const message = inputField.value.trim();
+        // إضافة الرسالة إلى واجهة المحادثة
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
 
-            if (message === "") {
-                toastr.warning("الرجاء إدخال رسالة.");
-                return;
-            }
+        // إرسال الرسالة إلى API الذكاء الاصطناعي
+        axios.get(`https://api.siputzx.my.id/api/ai/deepseek-llm-67b-chat?content=${encodeURIComponent(message)}`)
+            .then(response => {
+                if (response.data.status) {
+                    chatMessages.innerHTML += `<div class="message bot-message">${response.data.data}</div>`;
+                } else {
+                    toastr.error(translations[lang].errorAIChat);
+                }
+            })
+            .catch(error => {
+                toastr.error(translations[lang].errorServer);
+            });
 
-            // إضافة الرسالة إلى واجهة المحادثة
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
-
-            // إرسال الرسالة إلى API الذكاء الاصطناعي
-            axios.get(`https://api.siputzx.my.id/api/ai/deepseek-llm-67b-chat?content=${encodeURIComponent(message)}`)
-                .then(response => {
-                    if (response.data.status) {
-                        chatMessages.innerHTML += `<div class="message bot-message">${response.data.data}</div>`;
-                    } else {
-                        toastr.error("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.");
-                    }
-                })
-                .catch(error => {
-                    toastr.error("حدث خطأ في الاتصال بالخادم.");
-                });
-
-            // مسح حقل الإدخال
-            inputField.value = "";
-        }
-    </script>
+        // مسح حقل الإدخال
+        inputField.value = "";
+    }
+        </script>
 </body>
 </html>
