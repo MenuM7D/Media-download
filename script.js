@@ -8,6 +8,9 @@ const platformIcon = document.getElementById("platform-icon");
 const progressBar = document.getElementById("progress-bar");
 const progress = document.getElementById("progress");
 const fileInfo = document.getElementById("file-info");
+const fileDuration = document.getElementById("file-duration");
+const fileSize = document.getElementById("file-size");
+const fileStatus = document.getElementById("file-status");
 const videoUrlInput = document.getElementById("video-url");
 const videoUrlInputEn = document.getElementById("video-url-en");
 
@@ -72,13 +75,23 @@ function redirectToDownload(platform) {
 function clearVideoUrlInput() {
     videoUrlInput.value = "";
     videoUrlInputEn.value = "";
+    resetUI(); // إعادة تعيين واجهة المستخدم
+}
+
+// إعادة تعيين واجهة المستخدم
+function resetUI() {
+    fileInfo.classList.add("hidden");
+    progressBar.classList.add("hidden");
+    fileDuration.textContent = "";
+    fileSize.textContent = "";
+    fileStatus.textContent = "";
 }
 
 // جلب رابط الفيديو من API
 async function fetchDownloadLink() {
     const videoUrl = videoUrlInput.value || videoUrlInputEn.value;
     if (!videoUrl) {
-        toastr.error("يرجى إدخال رابط الفيديو");
+        resetUI(); // إعادة تعيين واجهة المستخدم إذا كان الحقل فارغًا
         return;
     }
 
@@ -140,10 +153,6 @@ async function fetchDownloadLink() {
 
 // عرض معلومات الملف
 async function displayFileInfo(data) {
-    const fileDuration = document.getElementById("file-duration");
-    const fileSize = document.getElementById("file-size");
-    const fileStatus = document.getElementById("file-status");
-
     let videoUrl = "";
     if (currentPlatform === "tiktok") {
         videoUrl = data.urls[0];
@@ -174,6 +183,7 @@ async function displayFileInfo(data) {
         if (contentLength) {
             const sizeInMB = (contentLength / (1024 * 1024)).toFixed(2);
             fileSize.textContent = `${sizeInMB} MB`;
+            fileSize.style.display = "inline"; // إظهار الحجم إذا كان متاحًا
         } else {
             // المحاولة الثانية: استخدام GET
             const getResponse = await fetch(videoUrl);
@@ -188,10 +198,11 @@ async function displayFileInfo(data) {
 
             const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
             fileSize.textContent = `${sizeInMB} MB`;
+            fileSize.style.display = "inline"; // إظهار الحجم إذا كان متاحًا
         }
     } catch (error) {
         console.error("حدث خطأ أثناء جلب الحجم:", error);
-        fileSize.textContent = "غير معروف";
+        fileSize.style.display = "none"; // إخفاء الحجم إذا لم يكن متاحًا
     }
 
     // الحالة
@@ -246,3 +257,11 @@ function setupDownloadButtons(data) {
 // جلب الفيديو تلقائيًا عند إدخال الرابط
 videoUrlInput.addEventListener("input", fetchDownloadLink);
 videoUrlInputEn.addEventListener("input", fetchDownloadLink);
+
+// إعادة تعيين واجهة المستخدم عند حذف الرابط
+videoUrlInput.addEventListener("input", (e) => {
+    if (!e.target.value) resetUI();
+});
+videoUrlInputEn.addEventListener("input", (e) => {
+    if (!e.target.value) resetUI();
+});
