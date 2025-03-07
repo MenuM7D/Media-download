@@ -82,9 +82,9 @@ function clearVideoUrlInput() {
 function resetUI() {
     fileInfo.classList.add("hidden");
     progressBar.classList.add("hidden");
+    progress.style.width = "0%"; // إعادة تعيين شريط التقدم
     fileDuration.textContent = "";
-    fileSize.textContent = "";
-    fileSize.style.display = "none"; // إخفاء الحجم بشكل افتراضي
+    fileSize.textContent = document.documentElement.lang === "ar" ? "غير معروف" : "Unknown";
     fileStatus.textContent = "";
 }
 
@@ -129,7 +129,7 @@ async function fetchDownloadLink() {
             apiUrl = `https://bk9.fun/download/instagram?url=${videoUrl}`;
             break;
         default:
-            toastr.error("المنصة غير مدعومة");
+            toastr.error(document.documentElement.lang === "ar" ? "المنصة غير مدعومة" : "Platform not supported");
             return;
     }
 
@@ -144,11 +144,11 @@ async function fetchDownloadLink() {
             setupDownloadButtons(data);
             await displayFileInfo(data); // عرض المعلومات الفعلية
         } else {
-            toastr.error("فشل في جلب البيانات");
+            toastr.error(document.documentElement.lang === "ar" ? "فشل في جلب البيانات" : "Failed to fetch data");
         }
     } catch (error) {
         console.error("حدث خطأ:", error);
-        toastr.error("حدث خطأ أثناء جلب البيانات");
+        toastr.error(document.documentElement.lang === "ar" ? "حدث خطأ أثناء جلب البيانات" : "An error occurred while fetching data");
     }
 }
 
@@ -184,7 +184,6 @@ async function displayFileInfo(data) {
         if (contentLength) {
             const sizeInMB = (contentLength / (1024 * 1024)).toFixed(2);
             fileSize.textContent = `${sizeInMB} MB`;
-            fileSize.style.display = "inline"; // إظهار الحجم إذا كان متاحًا
         } else {
             // المحاولة الثانية: استخدام GET
             const getResponse = await fetch(videoUrl);
@@ -199,15 +198,14 @@ async function displayFileInfo(data) {
 
             const sizeInMB = (totalSize / (1024 * 1024)).toFixed(2);
             fileSize.textContent = `${sizeInMB} MB`;
-            fileSize.style.display = "inline"; // إظهار الحجم إذا كان متاحًا
         }
     } catch (error) {
         console.error("حدث خطأ أثناء جلب الحجم:", error);
-        fileSize.style.display = "none"; // إخفاء الحجم إذا لم يكن متاحًا
+        fileSize.textContent = document.documentElement.lang === "ar" ? "غير معروف" : "Unknown";
     }
 
     // الحالة
-    fileStatus.textContent = "ناجحة";
+    fileStatus.textContent = document.documentElement.lang === "ar" ? "ناجحة" : "Successful";
 
     fileInfo.classList.remove("hidden");
 }
@@ -238,7 +236,7 @@ function setupDownloadButtons(data) {
     // إعداد زر نسخ الرابط
     copyLinkBtn.onclick = () => {
         navigator.clipboard.writeText(videoUrl).then(() => {
-            toastr.success("تم نسخ الرابط بنجاح");
+            toastr.success(document.documentElement.lang === "ar" ? "تم نسخ الرابط بنجاح" : "Link copied successfully");
         });
     };
 
@@ -246,11 +244,11 @@ function setupDownloadButtons(data) {
     shareBtn.onclick = () => {
         if (navigator.share) {
             navigator.share({
-                title: "فيديو",
+                title: document.documentElement.lang === "ar" ? "فيديو" : "Video",
                 url: videoUrl,
             });
         } else {
-            toastr.info("المشاركة غير مدعومة في هذا المتصفح");
+            toastr.info(document.documentElement.lang === "ar" ? "المشاركة غير مدعومة في هذا المتصفح" : "Sharing is not supported in this browser");
         }
     };
 }
