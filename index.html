@@ -192,40 +192,51 @@
 
     <!-- إضافة وظائف الذكاء الاصطناعي -->
     <script>
-        // فتح واجهة المحادثة
-        function openAIChat() {
-            const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
-            aiChatModal.show();
+    // فتح واجهة المحادثة
+    function openAIChat() {
+        const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
+        aiChatModal.show();
+    }
+
+    // إنشاء userid عشوائي
+    function generateRandomUserId() {
+        return Math.floor(Math.random() * 1000000); // يمكنك تغيير النطاق حسب الحاجة
+    }
+
+    // تحديث userid كل 5 دقائق (300000 مللي ثانية)
+    let userid = generateRandomUserId();
+    setInterval(() => {
+        userid = generateRandomUserId();
+    }, 300000);
+
+    // إرسال رسالة إلى الذكاء الاصطناعي
+    function sendMessage() {
+        const inputField = document.querySelector('[data-lang="ar"]').style.display !== 'none' 
+            ? document.getElementById('chat-input') 
+            : document.getElementById('chat-input-en');
+        const message = inputField.value.trim();
+
+        if (message === "") {
+            toastr.warning("الرجاء إدخال رسالة.");
+            return;
         }
 
-        // إرسال رسالة إلى الذكاء الاصطناعي
-        function sendMessage() {
-            const inputField = document.querySelector('[data-lang="ar"]').style.display !== 'none' 
-                ? document.getElementById('chat-input') 
-                : document.getElementById('chat-input-en');
-            const message = inputField.value.trim();
+        // إضافة الرسالة إلى واجهة المحادثة
+        const chatMessages = document.getElementById('chat-messages');
+        chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
 
-            if (message === "") {
-                toastr.warning("الرجاء إدخال رسالة.");
-                return;
-            }
-
-            // إضافة الرسالة إلى واجهة المحادثة
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
-
-            // إرسال الرسالة إلى API الذكاء الاصطناعي
-            axios.get(`https://api.siputzx.my.id/api/ai/deepseek-llm-67b-chat?content=${encodeURIComponent(message)}`)
-                .then(response => {
-                    if (response.data.status) {
-                        chatMessages.innerHTML += `<div class="message bot-message">${response.data.data}</div>`;
-                    } else {
-                        toastr.error("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.");
-                    }
-                })
-                .catch(error => {
-                    toastr.error("حدث خطأ في الاتصال بالخادم.");
-                });
+        // إرسال الرسالة إلى API الذكاء الاصطناعي
+        axios.get(`https://api-streamline-pro.vercel.app/api/ai/chatgpt?prompt=${encodeURIComponent(message)}&userid=${userid}`)
+            .then(response => {
+                if (response.data.status === "success") {
+                    chatMessages.innerHTML += `<div class="message bot-message">${response.data.chatgpt}</div>`;
+                } else {
+                    toastr.error("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.");
+                }
+            })
+            .catch(error => {
+                toastr.error("حدث خطأ في الاتصال بالخادم.");
+            });
 
             // مسح حقل الإدخال
             inputField.value = "";
