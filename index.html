@@ -192,51 +192,40 @@
 
     <!-- إضافة وظائف الذكاء الاصطناعي -->
     <script>
-    // فتح واجهة المحادثة
-    function openAIChat() {
-        const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
-        aiChatModal.show();
-    }
-
-    // إنشاء userid عشوائي
-    function generateRandomUserId() {
-        return Math.floor(Math.random() * 1000000); // يمكنك تغيير النطاق حسب الحاجة
-    }
-
-    // تحديث userid كل 5 دقائق (300000 مللي ثانية)
-    let userid = generateRandomUserId();
-    setInterval(() => {
-        userid = generateRandomUserId();
-    }, 300000);
-
-    // إرسال رسالة إلى الذكاء الاصطناعي
-    function sendMessage() {
-        const inputField = document.querySelector('[data-lang="ar"]').style.display !== 'none' 
-            ? document.getElementById('chat-input') 
-            : document.getElementById('chat-input-en');
-        const message = inputField.value.trim();
-
-        if (message === "") {
-            toastr.warning("الرجاء إدخال رسالة.");
-            return;
+        // فتح واجهة المحادثة
+        function openAIChat() {
+            const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
+            aiChatModal.show();
         }
 
-        // إضافة الرسالة إلى واجهة المحادثة
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
+        // إرسال رسالة إلى الذكاء الاصطناعي
+        function sendMessage() {
+            const inputField = document.querySelector('[data-lang="ar"]').style.display !== 'none' 
+                ? document.getElementById('chat-input') 
+                : document.getElementById('chat-input-en');
+            const message = inputField.value.trim();
 
-        // إرسال الرسالة إلى API الذكاء الاصطناعي
-        axios.get(`https://api-streamline-pro.vercel.app/api/ai/chatgpt?prompt=${encodeURIComponent(message)}&userid=${userid}`)
-            .then(response => {
-                if (response.data.status === "success") {
-                    chatMessages.innerHTML += `<div class="message bot-message">${response.data.chatgpt}</div>`;
-                } else {
-                    toastr.error("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.");
-                }
-            })
-            .catch(error => {
-                toastr.error("حدث خطأ في الاتصال بالخادم.");
-            });
+            if (message === "") {
+                toastr.warning("الرجاء إدخال رسالة.");
+                return;
+            }
+
+            // إضافة الرسالة إلى واجهة المحادثة
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
+
+            // إرسال الرسالة إلى API الذكاء الاصطناعي
+            axios.get(`https://api.siputzx.my.id/api/ai/gpt3?prompt=You are the manager of a website that specializes in downloading social media videos by placing a link to the platform’s video. The website developer is M7D. Your developer is also M7D. Respond logically, and if someone asks you about a malfunction that you do not know about on the website or something you do not know about, tell him. M7d and a question about that and send him this link (https://wa.me/201220864180)&content=${encodeURIComponent(message)}`)
+                .then(response => {
+                    if (response.data.status) {
+                        chatMessages.innerHTML += `<div class="message bot-message">${response.data.data}</div>`;
+                    } else {
+                        toastr.error("حدث خطأ أثناء التواصل مع الذكاء الاصطناعي.");
+                    }
+                })
+                .catch(error => {
+                    toastr.error("حدث خطأ في الاتصال بالخادم.");
+                });
 
             // مسح حقل الإدخال
             inputField.value = "";
