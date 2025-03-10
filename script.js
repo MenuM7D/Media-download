@@ -213,23 +213,22 @@ async function fetchDownloadLink() {
     }
 
     try {
-        const response = await axios.get(apiUrl);
-        const data = response.data;
-        if (data.status) {
-            // بدء شريط التقدم بشكل تدريجي
-            let width = 0;
-            const interval = setInterval(() => {
-                if (width >= 100) {
-                    clearInterval(interval);
+        const response = await axios.get(apiUrl, {
+            onDownloadProgress: (progressEvent) => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                progress.style.width = `${percentCompleted}%`;
+
+                // إخفاء شريط التقدم عند اكتمال التحميل
+                if (percentCompleted >= 100) {
                     setTimeout(() => {
                         progressBar.classList.add("hidden");
-                    }, 500);
-                } else {
-                    width++;
-                    progress.style.width = `${width}%`;
+                    }, 500); // إخفاء شريط التقدم بعد نصف ثانية
                 }
-            }, 20); // زيادة العرض كل 20 مللي ثانية
+            }
+        });
 
+        const data = response.data;
+        if (data.status) {
             setupDownloadButtons(data);
             await displayFileInfo(data); // عرض المعلومات الفعلية
             showElements(); // إظهار الأزرار عند نجاح جلب البيانات
