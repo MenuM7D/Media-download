@@ -118,7 +118,7 @@ footer {
 
 /* تنسيق الأزرار */
 #download-btn, #copy-link-btn, #share-btn {
-    background-color: #007bff;
+    background-color: #000000; /* الأسود الداكن */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -129,7 +129,7 @@ footer {
 }
 
 #download-btn:hover, #copy-link-btn:hover, #share-btn:hover {
-    background-color: #0056b3;
+    background-color: #333; /* لون أسود داكن فاتح قليلاً عند التمرير */
 }
 
 @media (max-width: 768px) {
