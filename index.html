@@ -98,6 +98,8 @@
                         <i class="fas fa-robot fa-3x text-primary"></i>
                         <p class="mt-2" data-lang="ar">الذكاء الاصطناعي</p>
                         <p class="mt-2" data-lang="en" style="display: none;">AI Chat</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -105,14 +107,23 @@
             <h2 id="download-title" class="mb-4 animate__animated animate__fadeIn" data-lang="ar">تنزيل المحتوى</h2>
             <h2 id="download-title-en" class="mb-4 animate__animated animate__fadeIn" data-lang="en" style="display: none;">Download Content</h2>
             <div class="input-group mb-3 w-100 mx-auto">
-    <input type="text" id="video-url" class="form-control animate__animated animate__fadeIn" placeholder="أدخل رابط الفيديو" data-lang="ar">
-    <input type="text" id="video-url-en" class="form-control animate__animated animate__fadeIn" placeholder="Enter Video URL" data-lang="en" style="display: none;">
-    <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
-    <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
+                <input type="text" id="video-url" class="form-control animate__animated animate__fadeIn" placeholder="أدخل رابط الفيديو" data-lang="ar">
+                <input type="text" id="video-url-en" class="form-control animate__animated animate__fadeIn" placeholder="Enter Video URL" data-lang="en" style="display: none;">
+                <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="ar">جلب الفيديو</button>
+                <button class="btn btn-dark hvr-grow" onclick="fetchDownloadLink()" data-lang="en" style="display: none;">Fetch Video</button>
             </div>
-            <div id="progress-bar" class="progress my-4 hidden">
-                <div id="progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+            <!-- دائرة التحميل -->
+            <div id="loading-spinner" class="my-4 hidden">
+                <i class="fas fa-spinner fa-3x fa-spin text-primary"></i>
             </div>
+
+            <!-- علامة الصح الخضراء -->
+            <div id="success-icon" class="my-4 hidden">
+                <i class="fas fa-check-circle fa-3x text-success animate__animated animate__zoomIn"></i>
+            </div>
+
+            <!-- معلومات الملف -->
             <div id="file-info" class="hidden my-4">
                 <div class="card">
                     <div class="card-body">
@@ -140,6 +151,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- أزرار التنزيل والنسخ والمشاركة -->
             <div class="mt-3">
                 <button id="download-btn" class="btn btn-success hvr-grow">
                     <i class="fas fa-download"></i>
