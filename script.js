@@ -53,6 +53,8 @@ const progress = document.getElementById("progress");
 const fileInfo = document.getElementById("file-info");
 const videoUrlInput = document.getElementById("video-url");
 const videoUrlInputEn = document.getElementById("video-url-en");
+const loadingSpinner = document.getElementById("loading-spinner");
+const successIcon = document.getElementById("success-icon");
 
 // الترجمة
 function changeLanguage(lang) {
@@ -146,6 +148,8 @@ function clearFileInfo() {
     document.getElementById("file-size").textContent = "";
     document.getElementById("file-status").textContent = "";
     hideElements(); // إخفاء الأزرار عند مسح الرابط
+    hideLoadingSpinner(); // إخفاء دائرة التحميل
+    hideSuccessIcon(); // إخفاء علامة الصح
 }
 
 // إخفاء العناصر
@@ -164,6 +168,30 @@ function showElements() {
     fileInfo.classList.add("show-elements");
 }
 
+// إظهار دائرة التحميل
+function showLoadingSpinner() {
+    loadingSpinner.classList.remove("hidden");
+    successIcon.classList.add("hidden");
+}
+
+// إخفاء دائرة التحميل
+function hideLoadingSpinner() {
+    loadingSpinner.classList.add("hidden");
+}
+
+// إظهار علامة الصح
+function showSuccessIcon() {
+    successIcon.classList.remove("hidden");
+    loadingSpinner.classList.add("hidden");
+    successIcon.classList.add("animate-success"); // إضافة تأثير بسيط
+}
+
+// إخفاء علامة الصح
+function hideSuccessIcon() {
+    successIcon.classList.add("hidden");
+    successIcon.classList.remove("animate-success");
+}
+
 // جلب رابط الفيديو من API
 async function fetchDownloadLink() {
     const videoUrl = videoUrlInput.value || videoUrlInputEn.value;
@@ -175,8 +203,7 @@ async function fetchDownloadLink() {
         return;
     }
 
-    progressBar.classList.remove("hidden");
-    progress.style.width = "0%";
+    showLoadingSpinner(); // إظهار دائرة التحميل
 
     let apiUrl = "";
     switch (currentPlatform) {
@@ -213,31 +240,21 @@ async function fetchDownloadLink() {
     }
 
     try {
-        const response = await axios.get(apiUrl, {
-            onDownloadProgress: (progressEvent) => {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                progress.style.width = `${percentCompleted}%`;
-
-                // إخفاء شريط التقدم عند اكتمال التحميل
-                if (percentCompleted >= 100) {
-                    setTimeout(() => {
-                        progressBar.classList.add("hidden");
-                    }, 500); // إخفاء شريط التقدم بعد نصف ثانية
-                }
-            }
-        });
-
+        const response = await axios.get(apiUrl);
         const data = response.data;
         if (data.status) {
+            showSuccessIcon(); // إظهار علامة الصح عند النجاح
             setupDownloadButtons(data);
             await displayFileInfo(data); // عرض المعلومات الفعلية
             showElements(); // إظهار الأزرار عند نجاح جلب البيانات
         } else {
             toastr.error(translations[lang].errorFetchData);
+            hideLoadingSpinner(); // إخفاء دائرة التحميل عند الفشل
         }
     } catch (error) {
         console.error("حدث خطأ:", error);
         toastr.error(translations[lang].errorGeneral);
+        hideLoadingSpinner(); // إخفاء دائرة التحميل عند الخطأ
     }
 }
 
