@@ -4,13 +4,13 @@
   "description": "قم بتنزيل المحتوي من اشهر مواقع التواصل الاجتماعي بسلاسة وبساطه وبدون علامة مائية من خلال موقعنا ميديا داونلود",
   "icons": [
     {
-      "src": "https://i.ibb.co/C3m3BWgC/1000013554.png", // أيقونة 192x192
+      "src": "https://upcdn.io/W23MT3P/raw/uploads/2025/03/11/4jw6mAnbL6-1000051773%20(2).jpg", // أيقونة 192x192
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "https://i.ibb.co/Zz4hzhpB/1000013555.jpg", // أيقونة 512x512
+      "src": "https://upcdn.io/W23MT3P/raw/uploads/2025/03/11/4jw6mcEK7S-1000051773%20(1).jpg", // أيقونة 512x512
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
@@ -23,8 +23,8 @@
   "theme_color": "#000000",
   "shortcuts": [
     {
-      "name": "L&M",
-      "short_name": "Link maker",
+      "name": "M&D",
+      "short_name": "media download",
       "description": "قم بتنزيل المحتوي من اشهر مواقع التواصل الاجتماعي بسلاسة وبساطه وبدون علامة مائية من خلال موقعنا ميديا داونلود",
       "url": "https://media-downloader-rho.vercel.app",
       "icons": [
