@@ -81,10 +81,6 @@ footer {
 #current-platform-indicator {
     z-index: 1000;
     transition: transform 0.3s ease;
-    background-color: #000000; /* الأسود الداكن */
-    color: white; /* لون النص الأبيض */
-    padding: 10px;
-    border-radius: 5px;
 }
 
 #current-platform-indicator:hover {
@@ -95,12 +91,12 @@ footer {
     height: 20px;
     border-radius: 10px;
     overflow: hidden;
-    background-color: #333; /* لون الخلفية لشريط التقدم */
+    background-color: #e0e0e0; /* لون خلفية شريط التقدم (فاتح) */
 }
 
 #progress {
     transition: width 0.3s ease;
-    background-color: #000000; /* اللون الأسود الداكن للتقدم */
+    background-color: #333; /* اللون الأسود الداكن للتقدم */
 }
 
 #file-info {
@@ -110,10 +106,12 @@ footer {
 #file-info .card {
     max-width: 400px;
     margin: 0 auto;
-    background-color: #000000; /* الأسود الداكن */
-    color: white; /* لون النص الأبيض */
+    /* تم إعادة لون لوحة معلومات الملف إلى الأصلي (بدون تغيير) */
+    background-color: #ffffff; /* لون الخلفية الأبيض */
+    color: #333; /* لون النص الأسود */
     border-radius: 10px;
     padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ظل خفيف */
 }
 
 /* إخفاء العناصر بشكل افتراضي */
@@ -128,7 +126,7 @@ footer {
 
 /* تنسيق الأزرار */
 #download-btn, #copy-link-btn, #share-btn {
-    background-color: #000000; /* الأسود الداكن */
+    background-color: #333; /* الأسود الداكن */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -139,7 +137,7 @@ footer {
 }
 
 #download-btn:hover, #copy-link-btn:hover, #share-btn:hover {
-    background-color: #333; /* لون أغمق عند التمرير */
+    background-color: #555; /* لون أغمق قليلاً عند التمرير */
 }
 
 @media (max-width: 768px) {
