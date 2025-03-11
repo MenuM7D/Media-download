@@ -1,8 +1,8 @@
 /* ملف styles.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
+    background-color: #000000; /* الخلفية السوداء الداكنة */
+    color: #ffffff; /* النص الأبيض */
     margin: 0;
     padding: 0;
 }
@@ -19,7 +19,7 @@ header {
 }
 
 .language-switcher button {
-    background-color: #333;
+    background-color: #333; /* أسود داكن */
     color: white;
     border: none;
     padding: 5px 10px;
@@ -66,6 +66,10 @@ main {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
+    background-color: #333; /* أسود داكن */
+    color: white;
+    border: none;
+    border-radius: 5px;
 }
 
 footer {
@@ -91,19 +95,26 @@ footer {
     height: 20px;
     border-radius: 10px;
     overflow: hidden;
+    background-color: #333; /* أسود داكن */
 }
 
 #progress {
     transition: width 0.3s ease;
+    background-color: #555; /* لون فاتح قليلاً */
 }
 
 #file-info {
     margin-top: 20px;
+    color: white;
 }
 
 #file-info .card {
     max-width: 400px;
     margin: 0 auto;
+    background-color: #333; /* أسود داكن */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
 }
 
 /* إخفاء العناصر بشكل افتراضي */
@@ -118,7 +129,7 @@ footer {
 
 /* تنسيق الأزرار */
 #download-btn, #copy-link-btn, #share-btn {
-    background-color: #000000; /* الأسود الداكن */
+    background-color: #333; /* أسود داكن */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -129,7 +140,7 @@ footer {
 }
 
 #download-btn:hover, #copy-link-btn:hover, #share-btn:hover {
-    background-color: #333; /* لون أسود داكن فاتح قليلاً عند التمرير */
+    background-color: #555; /* لون فاتح قليلاً */
 }
 
 @media (max-width: 768px) {
@@ -137,4 +148,4 @@ footer {
         flex: 0 0 50%;
         max-width: 50%;
     }
-}
+    }
