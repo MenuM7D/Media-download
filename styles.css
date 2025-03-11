@@ -5,12 +5,13 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* لمنع التمرير الأفقي */
 }
 
 header {
     background-color: #000000; /* الأسود الداكن */
     color: white;
-    padding: 20px;
+    padding: 10px; /* تقليل الحشوة */
     text-align: center;
 }
 
@@ -28,7 +29,7 @@ header {
 }
 
 main {
-    padding: 20px;
+    padding: 10px; /* تقليل الحشوة */
 }
 
 .platforms {
@@ -42,6 +43,7 @@ main {
     margin: 10px;
     cursor: pointer;
     transition: transform 0.2s;
+    flex: 1 1 45%; /* جعل العناصر تأخذ مساحة أقل */
 }
 
 .platform-icon:hover {
@@ -49,8 +51,8 @@ main {
 }
 
 .platform-icon img {
-    width: 100px;
-    height: 100px;
+    width: 80px; /* تصغير حجم الصور */
+    height: 80px;
 }
 
 #download-section {
@@ -63,7 +65,7 @@ main {
 }
 
 #video-url {
-    width: 100%;
+    width: 90%; /* تقليل عرض مربع النص */
     padding: 10px;
     margin-top: 10px;
 }
@@ -73,8 +75,7 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
-    position: fixed;
-    bottom: 0;
+    position: relative; /* تغيير من fixed إلى relative */
     width: 100%;
 }
 
@@ -104,7 +105,7 @@ footer {
 }
 
 #file-info .card {
-    max-width: 400px;
+    max-width: 100%; /* جعل العرض يتناسب مع الشاشة */
     margin: 0 auto;
     background-color: #ffffff; /* لون الخلفية الأبيض */
     color: #333; /* لون النص الأسود */
@@ -159,5 +160,22 @@ footer {
     .platforms .col-md-2 {
         flex: 0 0 50%;
         max-width: 50%;
+    }
+
+    .platform-icon {
+        flex: 1 1 100%; /* جعل العناصر تأخذ المساحة الكاملة على الهواتف */
+    }
+
+    .platform-icon img {
+        width: 60px; /* تصغير حجم الصور أكثر */
+        height: 60px;
+    }
+
+    #video-url {
+        width: 100%; /* جعل مربع النص يأخذ العرض الكامل */
+    }
+
+    footer {
+        position: relative; /* تغيير من fixed إلى relative */
     }
 }
