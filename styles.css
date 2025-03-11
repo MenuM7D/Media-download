@@ -106,7 +106,6 @@ footer {
 #file-info .card {
     max-width: 400px;
     margin: 0 auto;
-    /* تم إعادة لون لوحة معلومات الملف إلى الأصلي (بدون تغيير) */
     background-color: #ffffff; /* لون الخلفية الأبيض */
     color: #333; /* لون النص الأسود */
     border-radius: 10px;
@@ -137,6 +136,22 @@ footer {
 }
 
 #download-btn:hover, #copy-link-btn:hover, #share-btn:hover {
+    background-color: #555; /* لون أغمق قليلاً عند التمرير */
+}
+
+/* كلاس جديد لأزرار الإرسال */
+.dark-btn {
+    background-color: #333; /* الأسود الداكن */
+    color: white; /* لون النص الأبيض */
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.dark-btn:hover {
     background-color: #555; /* لون أغمق قليلاً عند التمرير */
 }
 
