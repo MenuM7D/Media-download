@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="قم بتنزيل المحتوي من اشهر مواقع التواصل الاجتماعي وبدون علامه مائيه من خلال موقعنا ميديا داونلود">
     <meta name="image" content="https://upcdn.io/W23MT3P/raw/uploads/2025/03/11/4jw6hpp5Gj-copilot_image_1741653020662.jpeg">
-
     <!-- Open Graph meta tags for social media platforms (including WhatsApp) -->
     <meta property="og:title" content="media download">
     <meta property="og:description" content="قم بتنزيل المحتوي من اشهر مواقع التواصل الاجتماعي وبدون علامه مائيه من خلال موقعنا ميديا داونلود">
     <meta property="og:image" content="https://upcdn.io/W23MT3P/raw/uploads/2025/03/11/4jw6h8jq7d-1000051773%20(3).jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    
     <!-- Twitter Card meta tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://upcdn.io/W23MT3P/raw/uploads/2025/03/11/4jw6hpp5Gj-copilot_image_1741653020662.jpeg">
@@ -35,7 +33,6 @@
     <aside id="current-platform-indicator" class="position-fixed top-50 start-0 translate-middle-y bg-dark text-white p-3 rounded-end shadow">
         <i id="platform-icon" class="fas fa-question-circle fa-2x"></i>
     </aside>
-
     <header class="bg-dark text-white text-center py-4">
     <h1 class="animate__animated animate__fadeIn" data-lang="ar">موقع تنزيل المحتوى</h1>
     <h1 class="animate__animated animate__fadeIn" data-lang="en" style="display: none;">Content Download Website</h1>
@@ -44,7 +41,6 @@
             <button class="btn btn-outline-light btn-sm" onclick="changeLanguage('en')">English</button>
         </div>
     </header>
-
     <main class="container my-5">
         <section class="platforms text-center">
             <div class="row">
@@ -119,7 +115,6 @@
                         <p class="mt-2" data-lang="en" style="display: none;">AI Chat</p>
             </div>
         </section>
-
         <section id="download-section" class="hidden text-center">
             <h2 id="download-title" class="mb-4 animate__animated animate__fadeIn" data-lang="ar">تنزيل المحتوى</h2>
             <h2 id="download-title-en" class="mb-4 animate__animated animate__fadeIn" data-lang="en" style="display: none;">Download Content</h2>
@@ -172,11 +167,9 @@
             </div>
         </section>
     </main>
-
     <footer class="bg-dark text-white text-center py-3">
         <p>All rights reserved to M7D © 2025</p>
     </footer>
-
     <!-- واجهة المحادثة -->
     <div id="ai-chat-modal" class="modal fade" tabindex="-1" aria-labelledby="aiChatModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -200,7 +193,6 @@
             </div>
         </div>
     </div>
-
     <!-- روابط مكتبات JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
@@ -208,7 +200,11 @@
     <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="script.js"></script>
-
+    <!-- إعلانات -->
+    <script type='text/javascript' src='//pl26116987.effectiveratecpm.com/bd/78/8d/bd788de9a2c92355a5706c2b1afb6111.js'></script>
+    <script type='text/javascript' src='//pl26117036.effectiveratecpm.com/38/77/b3/3877b3ec0bab877211d475489b7c8993.js'></script>
+    <script async="async" data-cfasync="false" src="//pl26117053.effectiveratecpm.com/e8817eb3a82e9c2438c4b5adc546dbc2/invoke.js"></script>
+    <div id="container-e8817eb3a82e9c2438c4b5adc546dbc2"></div>
     <!-- إضافة وظائف الذكاء الاصطناعي -->
     <script>
         // فتح واجهة المحادثة
@@ -216,23 +212,19 @@
             const aiChatModal = new bootstrap.Modal(document.getElementById('ai-chat-modal'));
             aiChatModal.show();
         }
-
         // إرسال رسالة إلى الذكاء الاصطناعي
         function sendMessage() {
             const inputField = document.querySelector('[data-lang="ar"]').style.display !== 'none' 
                 ? document.getElementById('chat-input') 
                 : document.getElementById('chat-input-en');
             const message = inputField.value.trim();
-
             if (message === "") {
                 toastr.warning("الرجاء إدخال رسالة.");
                 return;
             }
-
             // إضافة الرسالة إلى واجهة المحادثة
             const chatMessages = document.getElementById('chat-messages');
             chatMessages.innerHTML += `<div class="message user-message">${message}</div>`;
-
             // إرسال الرسالة إلى API الذكاء الاصطناعي
             axios.get(`https://api.siputzx.my.id/api/ai/gpt3?prompt=You are the manager of a website that specializes in downloading social media videos by placing a link to the platform’s video. The website developer is M7D. Your developer is also M7D. Respond logically, and if someone asks you about a malfunction that you do not know about on the website or something you do not know about, tell him. M7d and a question about that and send him this link (https://wa.me/201220864180)&content=${encodeURIComponent(message)}`)
                 .then(response => {
@@ -245,10 +237,9 @@
                 .catch(error => {
                     toastr.error("حدث خطأ في الاتصال بالخادم.");
                 });
-
             // مسح حقل الإدخال
             inputField.value = "";
         }
-        </script>
+    </script>
 </body>
                 </html>
